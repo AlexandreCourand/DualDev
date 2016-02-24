@@ -1,4 +1,4 @@
 1) L'appel à bind à echouer avec le message "bind socker_serveur : Address already in use"
-2) Le client s'est déconnecté avec l'option -z et n'a pas de réponse du serveur
+2) Le serveur quitte à la fin de la connexion.
 3) le message "telnet: Unable to connect to remote host: Connection refused" apparait car ::1 est de l'IPV6
 4) Le serveur ne gère qu'un seul client à la fois
