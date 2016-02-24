@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <signal.h>
 #include <stdlib.h>
+
 int main(void){
 	int socket_serveur = creer_serveur(8080);
 	initialiser_signaux();
