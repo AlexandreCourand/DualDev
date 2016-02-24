@@ -1,0 +1,2 @@
+Il faut se mettre dans le répertoire DualDev puis faire make
+Puis aller dans le répertoire webserver et faire ./serve
