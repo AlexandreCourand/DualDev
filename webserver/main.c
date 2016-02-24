@@ -18,6 +18,7 @@ int main(void){
 			break;
 			/* traitement d ’ erreur */
 		}
+		if(fork()==0){
 		/* On peut maintenant dialoguer avec le client */
 
 		const char * message_bienvenue = " Bonjour , bienvenue sur mon serveur \n+\n+\n+\n+\n+\n+\n+\n+\n+\n+\n je suis un très long messageeeeeeeeeeeeeeeee \n" ;
@@ -39,7 +40,9 @@ int main(void){
 				/* traitement d'erreur */
 			}
 			write(socket_client,buf,j);
+
 		}
+	}
 	}
 	return 0;
 } 
