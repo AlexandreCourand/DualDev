@@ -34,7 +34,7 @@ int main(void){
 				break;
 				/* traitement d'erreur */
 			}
-			if(j==0){
+			if(j==0){ 
 				perror("deconnexion");
 				break;
 				/* traitement d'erreur */
