@@ -30,18 +30,20 @@ int main(void){
 		
 		while(1){
 			char buf[1024];
-			int j=read(socket_client,buf,1024);
-			if(j==-1){
+			//int j=read(socket_client,buf,1024);
+			FILE *lireDonneClient=fopen(socket_client,"w+") 
+			fgets(buf,1024,lireDonneClient);
+			/*if(j==-1){
 				perror("read");
 				break;
 				/* traitement d'erreur */
-			}
+			/*}
 			if(j==0){ 
 				perror("deconnexion");
 				break;
 				/* traitement d'erreur */
-			}
-			write(socket_client,buf,j);
+			//}
+			write(socket_client,buf,strlen(buf));
 
 		}
 		exit(0);
