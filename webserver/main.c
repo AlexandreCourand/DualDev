@@ -18,32 +18,39 @@ int main(void){
 		if ( socket_client == -1){
 			perror ( " accept " );
 			break;
-			/* traitement d ’ erreur */
+/* traitement d ’ erreur */
 		}
 		if(fork()==0){
-		/* On peut maintenant dialoguer avec le client */
+/* On peut maintenant dialoguer avec le client */
 
-		const char * message_bienvenue = " Bonjour , bienvenue sur mon serveur \n+\n+\n+\n+\n+\n+\n+\n+\n+\n+\n je suis un très long messageeeeeeeeeeeeeeeee \n" ;
+		const char * message_bienvenue = "Ah, Bonjour , bienvenue sur mon serveur \n+\n+\n+\n+\n+\n+\n+\n+\n+\n+\n je suis un très long messageeeeeeeeeeeeeeeee \n" ;
 		sleep(1);
 		//printf("%zu\n", strlen(message_bienvenue));
 		write ( socket_client , message_bienvenue , strlen ( message_bienvenue ));
+					
+			FILE *lireDonneClient=fdopen(socket_client,"w+");
+			if(lireDonneClient==NULL){
+				perror("fdopen");
+				break;
+				/*traitement d'erreur*/
+			}
 		
 		while(1){
 			char buf[1024];
-			//int j=read(socket_client,buf,1024);
-			FILE *lireDonneClient=fopen(socket_client,"w+") 
+			// seconde chaine pour la concaténation.
+			char buf2[1200]="<nom_serveur>";
+		
 			fgets(buf,1024,lireDonneClient);
-			/*if(j==-1){
-				perror("read");
+			if(buf==NULL){
+				perror("erreur ou déconnexion");
 				break;
-				/* traitement d'erreur */
-			/*}
-			if(j==0){ 
-				perror("deconnexion");
-				break;
-				/* traitement d'erreur */
-			//}
-			write(socket_client,buf,strlen(buf));
+				/*traitement d'erreur ou deco, voir man fgets return Value*/ 
+			}
+			//concaténation
+			strcat(buf2,buf);
+
+			
+			write(socket_client,buf2,strlen(buf2));
 
 		}
 		exit(0);
