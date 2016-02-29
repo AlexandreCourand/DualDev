@@ -50,7 +50,7 @@ int main(void){
 			strcat(buf2,buf);
 
 			
-			fprintf(lireDonneClient,buf2,strlen(buf2));
+			fprintf(lireDonneClient,buf2,strlen(buf2)); 
 
 		}
 		exit(0);
