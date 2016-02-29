@@ -28,7 +28,7 @@ int main(void){
 		//printf("%zu\n", strlen(message_bienvenue));
 		write ( socket_client , message_bienvenue , strlen ( message_bienvenue ));
 					
-			FILE *lireDonneClient=fdopen(socket_client,"w+");
+			FILE *lireDonneClient=fdopen(socket_client,"w+"); // sert aussi pour lui envoyée les données 
 			if(lireDonneClient==NULL){
 				perror("fdopen");
 				break;
@@ -50,7 +50,7 @@ int main(void){
 			strcat(buf2,buf);
 
 			
-			write(socket_client,buf2,strlen(buf2));
+			fprintf(lireDonneClient,buf2,strlen(buf2));
 
 		}
 		exit(0);
