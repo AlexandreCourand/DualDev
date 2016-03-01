@@ -18,15 +18,15 @@ int main(void){
 		if ( socket_client == -1){
 			perror ( " accept " );
 			break;
-/* traitement d ’ erreur */
+		/* traitement d ’ erreur */
 		}
 		if(fork()==0){
-/* On peut maintenant dialoguer avec le client */
+			/* On peut maintenant dialoguer avec le client */
 
-		const char * message_bienvenue = "Ah, Bonjour , bienvenue sur mon serveur \n+\n+\n+\n+\n+\n+\n+\n+\n+\n+\n je suis un très long messageeeeeeeeeeeeeeeee \n" ;
-		sleep(1);
-		//printf("%zu\n", strlen(message_bienvenue));
-		write ( socket_client , message_bienvenue , strlen ( message_bienvenue ));
+			const char * message_bienvenue = "Ah, Bonjour , bienvenue sur mon serveur \n+\n+\n+\n+\n+\n+\n+\n+\n+\n+\n je suis un très long messageeeeeeeeeeeeeeeee \n" ;
+			sleep(1);
+			
+			write ( socket_client , message_bienvenue , strlen ( message_bienvenue ));
 					
 			FILE *lireDonneClient=fdopen(socket_client,"w+"); // sert aussi pour lui envoyée les données 
 			if(lireDonneClient==NULL){
@@ -35,26 +35,26 @@ int main(void){
 				/*traitement d'erreur*/
 			}
 		
-		while(1){
-			char buf[1024];
-			// seconde chaine pour la concaténation.
-			char buf2[1200]="<nom_serveur>";
+			while(1){
+				char buf[1024];
+				// seconde chaine pour la concaténation.
+				char buf2[10]="<DualDev>";
 		
-			fgets(buf,1024,lireDonneClient);
-			if(buf==NULL){
-				perror("erreur ou déconnexion");
-				break;
-				/*traitement d'erreur ou deco, voir man fgets return Value*/ 
-			}
-			//concaténation
-			strcat(buf2,buf);
+				char* get = fgets(buf,1024,lireDonneClient);
+				if(get==NULL){
+					perror("déconnexion");
+					break;
+					/*traitement d'erreur ou deco, voir man fgets return Value*/ 
+				}
+				//concaténation
+				strcat(buf2,buf);
 
 			
-			fprintf(lireDonneClient,buf2,strlen(buf2)); 
+				fprintf(lireDonneClient,buf2,strlen(buf2)); 
 
+			}
+			exit(0);
 		}
-		exit(0);
-	}
 	}
 	return 0;
 } 
