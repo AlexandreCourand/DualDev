@@ -38,9 +38,10 @@ int main(void){
 			while(1){
 				char buf[1024];
 				// seconde chaine pour la concaténation.
-				char buf2[10]="<DualDev>";
+				
 		
 				char* get = fgets(buf,1024,lireDonneClient);
+				char buf2[1036]="<DualDev>";
 				if(get==NULL){
 					perror("déconnexion");
 					break;
