@@ -23,10 +23,10 @@ int main(void){
 		if(fork()==0){
 			/* On peut maintenant dialoguer avec le client */
 
-			const char * message_bienvenue = "Ah, Bonjour , bienvenue sur mon serveur \n+\n+\n+\n+\n+\n+\n+\n+\n+\n+\n je suis un très long messageeeeeeeeeeeeeeeee \n" ;
-			sleep(1);
+			//const char * message_bienvenue = "Ah, Bonjour , bienvenue sur mon serveur \n+\n+\n+\n+\n+\n+\n+\n+\n+\n+\n je suis un très long messageeeeeeeeeeeeeeeee \n" ;
+			//sleep(1);
 			
-			write ( socket_client , message_bienvenue , strlen ( message_bienvenue ));
+			//write ( socket_client , message_bienvenue , strlen ( message_bienvenue ));
 					
 			FILE *lireDonneClient=fdopen(socket_client,"w+"); // sert aussi pour lui envoyée les données 
 			if(lireDonneClient==NULL){
@@ -41,17 +41,18 @@ int main(void){
 				
 		
 				char* get = fgets(buf,1024,lireDonneClient);
-				char buf2[1036]="<DualDev>";
+				//char buf2[1036]="<DualDev>";
 				if(get==NULL){
 					perror("déconnexion");
 					break;
 					/*traitement d'erreur ou deco, voir man fgets return Value*/ 
 				}
 				//concaténation
-				strcat(buf2,buf);
+				//strcat(buf2,buf);
 
 			
-				fprintf(lireDonneClient,buf2,strlen(buf2)); 
+				//fprintf(lireDonneClient,buf2,strlen(buf2));
+				printf("%s",buf);
 
 			}
 			exit(0);
