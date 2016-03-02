@@ -90,7 +90,9 @@ int main(void){
 					premiereLigne=0;
 					printf("ligne valide:%d",ligne1Valide);
 				}
-				printf("%s\n",buf);
+				if(strcmp(buf,"\r\n")==0||strcmp(buf,"\n")){ //début des ligne à ne pas ignorer
+					printf("%s\n",buf);
+				}
 					
 			}
 			printf("fin\n");
