@@ -54,10 +54,11 @@ int main(void){
 						sto=strtok(copiechaine," "); //fonction qui se rapelle elle même voir le man
 
 						while(sto!=NULL){
-							printf("%s \n",sto);
+							//printf("%s \n",sto);
 							nbMots++;
 							if(nbMots==1){
 								if(0!=strncmp(sto,"GET",3)){
+									printf("ligne ne commençant pas par get\n");
 									ligne1Valide=0;
 								}
 							}
@@ -65,13 +66,16 @@ int main(void){
 							if(nbMots==3){
 								if(0!=strncmp(sto,"HTTP/",5)){
 									ligne1Valide=0;
+									printf("mot ne commençant par par http/\n");
 								}
 								if(strlen(sto)>=8){
-									if(!(sto[6]=='1' && (sto[7]=='0' || sto[7]=='1'))){
+									if(!(sto[5]=='1' && (sto[7]=='0' || sto[7]=='1'))){
 										ligne1Valide=0;
+										printf("param http invalide\n");
 									}
 								}else{
 									ligne1Valide=0;
+									printf("taille 3ème mot invalide\n");
 								}
 							}
 							sto=strtok(NULL," ");
@@ -79,6 +83,7 @@ int main(void){
 						}
 						if(nbMots!=3){
 							ligne1Valide=0;
+							printf("nombre de mot invalide\n");
 
 						}
 					
