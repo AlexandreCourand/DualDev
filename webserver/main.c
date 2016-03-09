@@ -38,8 +38,9 @@ int main(void){
 					break;
 					/*traitement d'erreur*/
 				}
-				int premiereLigne=0; // teste si c'est la première ligne.
+				int premiereLigne=1; // teste si c'est la première ligne.
 				int ligne1Valide=1; //boolean
+				int donneATraite=0; // boolean qui indique si il y a eu un entrée.
 				while(1){
 					char buf[1024];
 				
@@ -100,12 +101,12 @@ int main(void){
 					premiereLigne=0;
 					printf("ligne valide:%d\n",ligne1Valide);
 					}
-					if((strcmp(buf,"\n")==0 || strcmp(buf,"\r\n")==0)){
-						premiereLigne = 1;
+					if((strcmp(buf,"\n")==0 || strcmp(buf,"\r\n")==0)){ // commence à traitée les donnée après la requête.
+						donneATraite=1;
+						printf("donnée a traitée:%d\n",donneATraite);
 					}
-					if(strcmp(buf,"\r\n")==0||strcmp(buf,"\n")){ //début des ligne à ne pas ignorer, debugage
-						printf("%s\n",buf);
-					}
+					
+
 					
 			}
 			printf("fin\n");
