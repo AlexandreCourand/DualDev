@@ -14,6 +14,8 @@ int main(void){
 	int socket_serveur = creer_serveur(8080);
 	initialiser_signaux();
 	char* erreur400 = "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 17\r\n\r\n400 Bad request\r\n";
+	char* succes200 = "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 8\r\n\r\n200 OK\r\n";
+
 	while(1){
 			int socket_client ;
 			socket_client = accept ( socket_serveur , NULL , NULL );
@@ -40,7 +42,7 @@ int main(void){
 				}
 				int premiereLigne=1; // teste si c'est la première ligne.
 				int ligne1Valide=1; //boolean
-				int donneATraite=0; // boolean qui indique si il y a eu un entrée.
+
 				while(1){
 					char buf[1024];
 				
@@ -102,8 +104,8 @@ int main(void){
 					printf("ligne valide:%d\n",ligne1Valide);
 					}
 					if((strcmp(buf,"\n")==0 || strcmp(buf,"\r\n")==0)){ // commence à traitée les donnée après la requête.
-						donneATraite=1;
-						printf("donnée a traitée:%d\n",donneATraite);
+						fprintf(lireDonneClient,succes200,strlen(succes200));
+						break;
 					}
 					
 
