@@ -16,6 +16,7 @@ int main(void){
 	char* erreur400 = "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 17\r\n\r\n400 Bad request\r\n";
 	char* succes200 = "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 8\r\n\r\n200 OK\r\n";
 	char* erreur404 = "HTTP/1.1 404 Page doesn't exist\r\nConnection: close\r\nContent-Length: 24\r\n\r\n404 Page doesn't exist\r\n";
+	char* mess;
 
 	while(1){
 			int socket_client ;
@@ -76,7 +77,7 @@ int main(void){
 							}
 							if(nbMots==2 && strlen(sto)>1){
 								
-								fprintf(lireDonneClient,erreur404,strlen(erreur400));
+								fprintf(lireDonneClient,erreur404,strlen(erreur404));
 								exit(1);
 							}
 							
@@ -84,18 +85,18 @@ int main(void){
 								if(0!=strncmp(sto,"HTTP/",5)){
 									ligne1Valide=0;
 									fprintf(lireDonneClient,erreur400,strlen(erreur400));
-									exit(1);
+
 								}
 								else if(strlen(sto)>=8){
 									if(!(sto[5]=='1' && (sto[7]=='0' || sto[7]=='1'))){
 										ligne1Valide=0;
 										fprintf(lireDonneClient,erreur400,strlen(erreur400));
-										exit(1);
+
 									}
 								}else{
 									ligne1Valide=0;
 									fprintf(lireDonneClient,erreur400,strlen(erreur400));
-									exit(1);
+
 								}
 							}
 							sto=strtok(NULL," ");
@@ -110,6 +111,7 @@ int main(void){
 					printf("ligne valide:%d\n",ligne1Valide);
 					}
 					if((strcmp(buf,"\n")==0 || strcmp(buf,"\r\n")==0)){ // commence à traitée les donnée après la requête.
+						if(ligneValide = 1)
 						fprintf(lireDonneClient,succes200,strlen(succes200));
 						break;
 					}

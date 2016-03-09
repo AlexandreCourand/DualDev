@@ -52,6 +52,14 @@ void initialiser_signaux(void){
 }
 
 void traitement_signal(int sig){
+	int status;
 	printf("Signal %d reçu \n",sig);
-	wait(0);
+	int pid = wait(&status);
+	if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == 11)
+			fprintf(stderr,"Erreur de segmentation de %d\n", pid);
+		else
+			fprintf(stderr,"Fin de %d par signal %d\n", pid, WTERMSIG(status));
+	}
 }
