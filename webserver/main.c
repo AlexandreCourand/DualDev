@@ -15,6 +15,7 @@ int main(void){
 	initialiser_signaux();
 	char* erreur400 = "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 17\r\n\r\n400 Bad request\r\n";
 	char* succes200 = "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 8\r\n\r\n200 OK\r\n";
+	char* erreur404 = "HTTP/1.1 404 Page doesn't exist\r\nConnection: close\r\nContent-Length: 24\r\n\r\n404 Page doesn't exist\r\n";
 
 	while(1){
 			int socket_client ;
@@ -72,6 +73,11 @@ int main(void){
 									ligne1Valide=0;
 									exit(1);
 								}
+							}
+							if(nbMots==2 && strlen(sto)>1){
+								
+								fprintf(lireDonneClient,erreur404,strlen(erreur400));
+								exit(1);
 							}
 							
 							if(nbMots==3){
