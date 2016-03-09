@@ -12,6 +12,7 @@
 int main(void){
 	int socket_serveur = creer_serveur(8080);
 	initialiser_signaux();
+	char* erreur400 = "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 17\r\n\r\n400 Bad request\r\n";
 	while(1){
 			int socket_client ;
 			socket_client = accept ( socket_serveur , NULL , NULL );
@@ -52,45 +53,51 @@ int main(void){
 						char* copiechaine=strdup(buf);
 						char* sto;
 						sto=strtok(copiechaine," "); //fonction qui se rapelle elle même voir le man
-
+						if(sto==NULL){
+							perror("strtok");
+							break;
+						}
 						while(sto!=NULL){
 							//printf("%s \n",sto);
 							nbMots++;
 							if(nbMots==1){
 								if(0!=strncmp(sto,"GET",3)){
-									printf("ligne ne commençant pas par get\n");
+									printf("%s\n",erreur400);
 									ligne1Valide=0;
+									break;
 								}
 							}
 							
 							if(nbMots==3){
 								if(0!=strncmp(sto,"HTTP/",5)){
 									ligne1Valide=0;
-									printf("mot ne commençant par par http/\n");
+									printf("%s\n",erreur400);
+									break;
 								}
-								if(strlen(sto)>=8){
+								else if(strlen(sto)>=8){
 									if(!(sto[5]=='1' && (sto[7]=='0' || sto[7]=='1'))){
 										ligne1Valide=0;
-										printf("param http invalide\n");
+										printf("%s\n",erreur400);
+										break;
 									}
 								}else{
 									ligne1Valide=0;
-									printf("taille 3ème mot invalide\n");
+									printf("%s\n",erreur400);
+									break;
 								}
 							}
 							sto=strtok(NULL," ");
 							
 						}
-						if(nbMots!=3){
+						if(nbMots!=3 && ligne1Valide==1){
 							ligne1Valide=0;
-							printf("nombre de mot invalide\n");
-
+							printf("%s\n",erreur400);
 						}
 					
 					premiereLigne=0;
-					printf("ligne valide:%d",ligne1Valide);
+					printf("ligne valide:%d\n",ligne1Valide);
 				}
-				if(strcmp(buf,"\r\n")==0||strcmp(buf,"\n")){ //début des ligne à ne pas ignorer
+				if(strcmp(buf,"\r\n")==0||strcmp(buf,"\n")){ //début des ligne à ne pas ignorer, debugage
 					printf("%s\n",buf);
 				}
 					
