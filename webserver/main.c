@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <signal.h>
 #include <stdlib.h>
+#include "client.h"
 
 int main(void){
 
