@@ -47,8 +47,7 @@ int main(void){
 
 				while(1){
 					char buf[1024];
-				
-			
+
 					char* get = fgets(buf,1024,lireDonneClient);
 					
 					if(get==NULL){
@@ -70,32 +69,32 @@ int main(void){
 							nbMots++;
 							if(nbMots==1){
 								if(0!=strncmp(sto,"GET",3)){
-									fprintf(lireDonneClient,erreur400,strlen(erreur400));
+									mess = erreur400;
 									ligne1Valide=0;
-									exit(1);
+									//exit(1);
 								}
 							}
-							if(nbMots==2 && strlen(sto)>1){
-								
-								fprintf(lireDonneClient,erreur404,strlen(erreur404));
-								exit(1);
+							if(nbMots==2 && strcmp(sto,"/")!=0){
+								ligne1Valide = 0;
+								mess = erreur404;
+								//exit(1);
 							}
 							
 							if(nbMots==3){
 								if(0!=strncmp(sto,"HTTP/",5)){
 									ligne1Valide=0;
-									fprintf(lireDonneClient,erreur400,strlen(erreur400));
+									mess =erreur400;
 
 								}
 								else if(strlen(sto)>=8){
 									if(!(sto[5]=='1' && (sto[7]=='0' || sto[7]=='1'))){
 										ligne1Valide=0;
-										fprintf(lireDonneClient,erreur400,strlen(erreur400));
+										mess = erreur400;
 
 									}
 								}else{
 									ligne1Valide=0;
-									fprintf(lireDonneClient,erreur400,strlen(erreur400));
+									mess = erreur400;
 
 								}
 							}
@@ -104,16 +103,19 @@ int main(void){
 						}
 						if(nbMots!=3 && ligne1Valide==1){
 							ligne1Valide=0;
-							fprintf(lireDonneClient,erreur400,strlen(erreur400));
+							mess = erreur400;
 						}
 					
 					premiereLigne=0;
 					printf("ligne valide:%d\n",ligne1Valide);
 					}
 					if((strcmp(buf,"\n")==0 || strcmp(buf,"\r\n")==0)){ // commence à traitée les donnée après la requête.
-						if(ligneValide = 1)
-						fprintf(lireDonneClient,succes200,strlen(succes200));
-						break;
+						if(ligne1Valide == 1){
+
+							mess = succes200;
+						}
+						fprintf(lireDonneClient,mess,strlen(mess));
+							break;				
 					}
 					
 
