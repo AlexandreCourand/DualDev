@@ -14,10 +14,10 @@ int main(void){
 
 	int socket_serveur = creer_serveur(8080);
 	initialiser_signaux();
-	char* erreur400 = "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 17\r\n\r\n400 Bad request\r\n";
-	char* succes200 = "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 8\r\n\r\n200 OK\r\n";
-	char* erreur404 = "HTTP/1.1 404 Page doesn't exist\r\nConnection: close\r\nContent-Length: 24\r\n\r\n404 Page doesn't exist\r\n";
-	char* mess;
+	//char* erreur400 = "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 17\r\n\r\n400 Bad request\r\n";
+	//char* succes200 = "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 8\r\n\r\n200 OK\r\n";
+	//char* erreur404 = "HTTP/1.1 404 Page doesn't exist\r\nConnection: close\r\nContent-Length: 24\r\n\r\n404 Page doesn't exist\r\n";
+	//char* mess;
 
 	while(1){
 			int socket_client ;
@@ -43,18 +43,27 @@ int main(void){
 					break;
 					/*traitement d'erreur*/
 				}
-				int premiereLigne=1; // teste si c'est la première ligne.
-				int ligne1Valide=1; //boolean
+				//int premiereLigne=1; // teste si c'est la première ligne.
+				//int ligne1Valide=1; //boolean
 
 				while(1){
 					char buf[1024];
+					char *repClient=fgets_or_exit(buf,1024,lireDonneClient);
+					printf("%s\n",repClient );
+
+					http_request request; 
+					int requeteOk=parse_http_request(buf,&request);
+					printf("%d\n",requeteOk);
+					/*
+					
 
 					char* get = fgets(buf,1024,lireDonneClient);
 					
 					if(get==NULL){
 						perror("déconnexion");
 						exit(1);
-						/*traitement d'erreur ou deco, voir man fgets return Value*/ 
+						traitement d'erreur ou deco, voir man fgets return Value*/ 
+						/*
 					}
 					int nbMots=0;
 					if(premiereLigne==1){
@@ -120,7 +129,7 @@ int main(void){
 					}
 					
 
-					
+					*/
 			}
 			printf("fin\n");
 			exit(0);
