@@ -22,11 +22,7 @@ char *fgets_or_exit(char *buffer, int size, FILE *stream) {
 }
 // revoie 0 si la requète n'est pas correcte, 1 sinon.
 int parse_http_request ( const char * request_line , http_request * request ){
-	//char* erreur400 = "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 17\r\n\r\n400 Bad request\r\n";
-	//char* succes200 = "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 8\r\n\r\n200 OK\r\n";
-	//char* erreur404 = "HTTP/1.1 404 Page doesn't exist\r\nConnection: close\r\nContent-Length: 24\r\n\r\n404 Page doesn't exist\r\n";
-
-					//char* mess;
+	
 					int premiereLigne=1; // teste si c'est la première ligne.
 					int ligne1Valide=1; //boolean
 
@@ -47,7 +43,7 @@ int parse_http_request ( const char * request_line , http_request * request ){
 							return 0;
 						}
 						while(sto!=NULL){
-							printf("test :%s \n",sto);
+							
 							nbMots++;
 							if(nbMots==1){
 								if(0==strncmp(sto,"GET",3) && strlen(sto)==3){
@@ -55,7 +51,7 @@ int parse_http_request ( const char * request_line , http_request * request ){
 
 								}else{
 									request->method=HTTP_UNSUPPORTED;
-									printf("erreur car:http insup %s\n",sto);
+									
 									valReturn=0;
 								}
 							}
@@ -69,14 +65,14 @@ int parse_http_request ( const char * request_line , http_request * request ){
 							if(nbMots==3){
 								if(0!=strncmp(sto,"HTTP/",5)){
 									return 0;
-									printf("erreur car: http inc");
+									
 
 								}else if(strlen(sto)>=8){
 									if(!(sto[5]=='1' && (sto[7]=='0' || sto[7]=='1'))){
 										valReturn=0;
 										ligne1Valide=0;
 										//mess = erreur400;
-										printf("erreur car:3ème mot inc");
+									
 
 									}else{
 										request->major_version=1;
@@ -85,8 +81,8 @@ int parse_http_request ( const char * request_line , http_request * request ){
 								}else{
 									valReturn=0;
 									ligne1Valide=0;
-									//mess = erreur400;
-									printf("erreur car: 3ème mots incorecte");
+								
+								
 
 								}
 							}
@@ -95,12 +91,12 @@ int parse_http_request ( const char * request_line , http_request * request ){
 						}
 						if(nbMots!=3 && ligne1Valide==1){
 							ligne1Valide=0;
-							printf("ici\n");
+						
 							valReturn=0;
 						}
 					
 					premiereLigne=0;
-					printf("ligne valide:%d\n",ligne1Valide);
+				
 					
 					}
 
@@ -145,23 +141,14 @@ void skip_headers(FILE* client){
 void send_status(FILE* client, int code, const char* reason_phrase){
     printf("reponse ici : HTTP/1.1 %d %s\r\n", code, reason_phrase);
     fprintf(client, "HTTP/1.1 %d %s\r\n", code, reason_phrase);
-
-
-	//char rep[500];
-
-	//sprintf(rep,"HTTP/1/1 %d %s\r\n",code,reason_phrase);
-	//printf("reponse ici : %s\n",rep);
-
-	//fprintf(client,rep,strlen(rep));
-
 }
 
 void send_response(FILE *client , int code , const char *reason_phrase , const char *message_body){
 	send_status(client, code, reason_phrase);
-	//printf("%d %s\n",code, reason_phrase);
+	
 	fprintf(client, "Connection: close\r\n");
 	fprintf(client, "Content_length : %zu\r\n", strlen(message_body));
-	    fprintf(client, "\r\n");
+	fprintf(client, "\r\n");
 
 	fprintf(client,"%s",message_body);
 	fflush(client);
