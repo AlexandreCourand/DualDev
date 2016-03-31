@@ -16,5 +16,6 @@ char * url;
 } http_request;
 
 int parse_http_request ( const char * request_line , http_request * request );
-void toStringHTTPrequest(http_request request);
+void afficheHTTPrequest(http_request request);
+void skip_headers(FILE* client);
 # endif

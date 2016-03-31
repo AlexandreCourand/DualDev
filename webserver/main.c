@@ -54,7 +54,8 @@ int main(void){
 					http_request request; 
 					int requeteOk=parse_http_request(repClient,&request);
 					printf("résultat requête:%d\n",requeteOk);
-					 toStringHTTPrequest(request);
+					 afficheHTTPrequest(request);
+					skip_headers(lireDonneClient);
 					/*
 					
 
@@ -140,3 +141,4 @@ int main(void){
 	}
 return 0;
 }
+

@@ -111,13 +111,13 @@ int parse_http_request ( const char * request_line , http_request * request ){
 						//fprintf(lireDonneClient,mess,strlen(mess));
 											
 					}
-					
+
 					return valReturn;
 
 					
 			}
 
-	void toStringHTTPrequest(http_request request){
+	void afficheHTTPrequest(http_request request){
 		char* method;
 		if(request.method==HTTP_GET){
 			method="HTTP_GET";
@@ -130,3 +130,22 @@ int parse_http_request ( const char * request_line , http_request * request ){
 		printf("minor_version:%d\n",request.minor_version);
 		printf("url: %s\n",request.url);
 	}
+// fonction qui lit les données client tant que celle ci ne sont pas égale à une ligne vide.
+void skip_headers(FILE* client){
+
+	char buf[1024];
+	int continuerLire=1;
+	while(continuerLire){
+		char* rep_client=fgets_or_exit(buf,1024,client);
+		if((strcmp(rep_client,"\n")==0 || strcmp(rep_client,"\r\n")==0)){
+			continuerLire=0;
+		}
+	}
+	printf("prêt pour envoyer rep\n");
+
+
+
+
+	
+
+}
