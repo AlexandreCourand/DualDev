@@ -49,11 +49,12 @@ int main(void){
 				while(1){
 					char buf[1024];
 					char *repClient=fgets_or_exit(buf,1024,lireDonneClient);
-					printf("%s\n",repClient );
+					printf("rep client: %s\n",repClient );
 
 					http_request request; 
-					int requeteOk=parse_http_request(buf,&request);
-					printf("%d\n",requeteOk);
+					int requeteOk=parse_http_request(repClient,&request);
+					printf("résultat requête:%d\n",requeteOk);
+					 toStringHTTPrequest(request);
 					/*
 					
 

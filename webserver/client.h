@@ -2,7 +2,7 @@
 # define CLIENT_H
 char *fgets_or_exit(char *buffer, int size, FILE *stream);
 
-typedef enum http_method ennum_http;
+
 enum http_method {
 HTTP_GET,
 HTTP_UNSUPPORTED,
@@ -16,4 +16,5 @@ char * url;
 } http_request;
 
 int parse_http_request ( const char * request_line , http_request * request );
+void toStringHTTPrequest(http_request request);
 # endif
