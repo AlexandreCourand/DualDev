@@ -20,6 +20,7 @@ char *fgets_or_exit(char *buffer, int size, FILE *stream) {
         return buffer;
     }
 }
+// revoie 0 si la requète n'est pas correcte, 1 sinon.
 int parse_http_request ( const char * request_line , http_request * request ){
 	//char* erreur400 = "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 17\r\n\r\n400 Bad request\r\n";
 	//char* succes200 = "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 8\r\n\r\n200 OK\r\n";
@@ -95,21 +96,12 @@ int parse_http_request ( const char * request_line , http_request * request ){
 						if(nbMots!=3 && ligne1Valide==1){
 							ligne1Valide=0;
 							printf("ici\n");
-							//mess = erreur400;
+							valReturn=0;
 						}
 					
 					premiereLigne=0;
 					printf("ligne valide:%d\n",ligne1Valide);
 					
-					}
-					if((strcmp(request_line,"\n")==0 || strcmp(request_line,"\r\n")==0)){ // commence à traitée les donnée après la requête.
-						if(ligne1Valide == 1){
-
-							//mess = succes200;
-						}
-						//printf("%s\n",mess);
-						//fprintf(lireDonneClient,mess,strlen(mess));
-											
 					}
 
 					return valReturn;
@@ -149,3 +141,19 @@ void skip_headers(FILE* client){
 	
 
 }
+
+void send_status(FILE* client, int code, const char* reason_phrase){
+	char rep[500];
+
+	sprintf(rep,"HTTP/1.1 %d %s\n",code,reason_phrase);
+
+	fprintf(client,rep,strlen(rep));
+
+}
+
+void send_response(FILE *client , int code , const char *reason_phrase , const char *message_body){
+	send_status(client, code, reason_phrase);
+	fprintf(client,message_body,strlen(message_body));
+}
+
+

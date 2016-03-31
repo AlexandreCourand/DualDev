@@ -46,16 +46,29 @@ int main(void){
 				//int premiereLigne=1; // teste si c'est la première ligne.
 				//int ligne1Valide=1; //boolean
 
-				while(1){
+				//while(1){
 					char buf[1024];
 					char *repClient=fgets_or_exit(buf,1024,lireDonneClient);
 					printf("rep client: %s\n",repClient );
 
 					http_request request; 
-					int requeteOk=parse_http_request(repClient,&request);
-					printf("résultat requête:%d\n",requeteOk);
+					int resultat_requete=parse_http_request(repClient,&request);
+					printf("résultat requête:%d\n",resultat_requete);
 					 afficheHTTPrequest(request);
 					skip_headers(lireDonneClient);
+					if (resultat_requete==0){
+						send_response(lireDonneClient , 400, "Bad Request", "Bad request\r\n");
+					}else if (request.method == HTTP_UNSUPPORTED){
+						send_response(lireDonneClient , 405, "Method Not Allowed", "Method Not Allowed\r\n");
+					}else if (strcmp(request.url, "/") == 0){
+						send_response(lireDonneClient , 200, "OK", "Bienvenue");
+						printf("test\n");
+					}else{
+						send_response(lireDonneClient , 404, "Not Found", "Not Found\r\n");
+					}
+					exit(0);
+
+
 					/*
 					
 
@@ -132,7 +145,7 @@ int main(void){
 					
 
 					*/
-			}
+			//}
 			printf("fin\n");
 			exit(0);
 		}
