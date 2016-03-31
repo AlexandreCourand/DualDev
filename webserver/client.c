@@ -143,17 +143,28 @@ void skip_headers(FILE* client){
 }
 
 void send_status(FILE* client, int code, const char* reason_phrase){
-	char rep[500];
+    printf("reponse ici : HTTP/1.1 %d %s\r\n", code, reason_phrase);
+    fprintf(client, "HTTP/1.1 %d %s\r\n", code, reason_phrase);
 
-	sprintf(rep,"HTTP/1.1 %d %s\n",code,reason_phrase);
 
-	fprintf(client,rep,strlen(rep));
+	//char rep[500];
+
+	//sprintf(rep,"HTTP/1/1 %d %s\r\n",code,reason_phrase);
+	//printf("reponse ici : %s\n",rep);
+
+	//fprintf(client,rep,strlen(rep));
 
 }
 
 void send_response(FILE *client , int code , const char *reason_phrase , const char *message_body){
 	send_status(client, code, reason_phrase);
-	fprintf(client,message_body,strlen(message_body));
+	//printf("%d %s\n",code, reason_phrase);
+	fprintf(client, "Connection: close\r\n");
+	fprintf(client, "Content_length : %zu\r\n", strlen(message_body));
+	    fprintf(client, "\r\n");
+
+	fprintf(client,"%s",message_body);
+	fflush(client);
 }
 
 
